@@ -14,13 +14,15 @@ export default class {
     constructor(options) {
         this.setOptions(options);
 
-        this.wrappers = Helpers.getNodes(`.${this.options.wrapperClass}`);
-        this.allContent = Helpers.getNodes(`.${this.options.contentClass}`);
-        this.headers = Helpers.getNodes(`.${this.options.headerClass}`);
+        this.wrapper = Helpers.getNodes(`.${this.options.wrapperClass}`)[0];
 
-        this.setPanels();
+        if (this.wrapper) {
+            // Check for accordion components
+            this.setElement('panels', `.${this.options.panelClass}`);
+            this.setElement('content', `.${this.options.contentClass}`);
+            this.setElement('headers', `.${this.options.headerClass}`);
+            this.setElement('content-canvas', `.${this.options.contentCanvasClass}`);
 
-        if (this.wrappers.length) {
             // Claculate initial heights and paddings
             this.calculateStyles();
 
@@ -74,11 +76,22 @@ export default class {
     }
 
     /**
+     * Set Accordion panels
+     */
+    setElement(name, selector) {
+        this[name] = Helpers.getNodes(selector, this.wrapper);
+
+        if (!this[name].length) {
+            throw new Error(`Please provide a ${name} wrapper (default: ${selector}) for each accordion item in your html markup`);
+        }
+    }
+
+    /**
      * Add trasition class to every accordion
      */
     setTransitionClass() {
         if (this.options.transition) {
-            Helpers.addClass(this.wrappers, this.options.transitionClass);
+            Helpers.addClass(this.wrapper, this.options.transitionClass);
         }
     }
 
@@ -86,7 +99,7 @@ export default class {
      * Get trasition class to every accordion
      */
     getTransitionDuration() {
-        let transitionDuration = Helpers.getStyle(this.allContent[0], 'transition-duration');
+        let transitionDuration = Helpers.getStyle(this.content[0], 'transition-duration');
 
         if (transitionDuration === '0s') {
             throw new Error(`You should set transition-duration on the '.${this.options.contentClass}' element in your css file or disable transition by setting "transition" option to false in the constructor`);
@@ -96,26 +109,11 @@ export default class {
     }
 
     /**
-     * Set Accordion panels
-     */
-    setPanels() {
-        this.wrappers.forEach((wrapper) => {
-            this.panels = Helpers.getNodes(`.${this.options.panelClass}`);
-
-            if (!this.panels.length) {
-                throw new Error(`Please provide a panel wrapper (default: ${this.options.panelClass}) for each accordion item`);
-            }
-        });
-    }
-
-    /**
      * Set Event listeners for accordion.
      */
     setListeners() {
         // We attach only one listener per accordion and delegate the event listening
-        this.wrappers.forEach((wrapper) => {
-            wrapper.addEventListener('click', (e) => this.handleItemClick(e));
-        });
+        this.wrapper.addEventListener('click', (e) => this.handleItemClick(e));
 
         // Recalculate content sizes on resize
         window.addEventListener('resize', Helpers.debounce(() => this.handleResize(), 300));
@@ -186,6 +184,9 @@ export default class {
         }
     }
 
+    /**
+     * Calculate initial heights and layout
+     */
     calculateStyles() {
         this.panels.forEach((panel) => {
             let content = panel.querySelector('.' + this.options.contentClass);
@@ -298,7 +299,9 @@ export default class {
         }
     }
 
-    // If smooth scrolling is enabled scroll to current panel once it's opened
+    /**
+     * If smooth scrolling is enabled scroll to current panel once it's opened
+     */
     handleScroll() {
         let mobileScroll = this.options.scrollToPanelOnClick && Helpers.isMobile().any();
         if (mobileScroll || this.options.scrollToPanelOnClick === 'all') {

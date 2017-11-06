@@ -1,8 +1,6 @@
 /**
- * @author Milad Alizadeh <hello@mili.london>
- * @version 0.1
- * @copyright 2017
- * @license Released under the MIT License.
+ * Consertina.js
+ *
  */
 
 // Styles
@@ -65,7 +63,7 @@ export default class {
             contentCanvasClass: 'c-concertina__content-canvas',
             handleHashUrl: false,
             scrollToPanelOnClick: 'mobile',
-            transition: false,
+            transition: true,
             closeOthers: true
         };
 
@@ -218,9 +216,10 @@ export default class {
      */
     toggle() {
         if (this.activePanel.data.isOpen) {
-            this.closePanel();
+            this.closePanel(this.activePanel);
+            this.activePanel = false;
         } else {
-            this.openPanel();
+            this.openPanel(this.activePanel);
 
             if (this.options.closeOthers) {
                 this.closeOthers();
@@ -235,15 +234,15 @@ export default class {
     /**
      * Close the active panel
      */
-    closePanel() {
+    closePanel(panel) {
         // Hide active panel content
-        Helpers.hide(this.activePanel.data.content);
+        Helpers.hide(panel.data.content);
 
         // Remove the active panel class
-        Helpers.removeClass(this.activePanel, this.options.activePanelClass);
+        Helpers.removeClass(panel, this.options.activePanelClass);
 
         // Set aria-expanded tag of the current header to false
-        Helpers.setAttr(this.activePanel.data.header, 'aria-expanded', false);
+        Helpers.setAttr(panel.data.header, 'aria-expanded', false);
 
         // Remove Url hash
         if (this.options.handleUrlHash) {
@@ -251,31 +250,29 @@ export default class {
         }
 
         // Set isOpen flag to false
-        this.activePanel.data.isOpen = false;
-
-        this.activePanel = false;
+        panel.data.isOpen = false;
     }
 
     /**
      * Open the clicked panel
      */
-    openPanel() {
+    openPanel(panel) {
         // Expand the active panel content
-        Helpers.show(this.activePanel.data.content, this.activePanel.data);
+        Helpers.show(panel.data.content, panel.data);
 
         // Add Active class to current panel
-        Helpers.addClass(this.activePanel, this.options.activePanelClass);
+        Helpers.addClass(panel, this.options.activePanelClass);
 
         // Set Aria expanded to ture on link
-        Helpers.setAttr(this.activePanel.data.header, 'aria-expanded', true);
+        Helpers.setAttr(panel.data.header, 'aria-expanded', true);
 
         // Update the url hash to current panel Id
         if (this.options.handleUrlHash) {
-            UrlHandler.updateUrlHash(this.activePanel.data.header);
+            UrlHandler.updateUrlHash(panel.data.header);
         }
 
         // Set isOpen flag to true
-        this.activePanel.data.isOpen = true;
+        panel.data.isOpen = true;
     }
 
     /**
@@ -313,5 +310,22 @@ export default class {
                 window.scrollTo(0, offset);
             }, this.transitionTime + 5);
         }
+    }
+
+    /**
+     * Open All panels
+     */
+    openAll() {
+        this.panels.forEach((panel) => {
+            this.openPanel(panel);
+        });
+    }
+    /**
+     * Open All panels
+     */
+    closeAll() {
+        this.panels.forEach((panel) => {
+            this.closePanel(panel);
+        });
     }
 }

@@ -14,7 +14,13 @@ export default class {
     constructor(options) {
         this.setOptions(options);
 
-        this.wrapper = Helpers.getNodes(`.${this.options.wrapperClass}`)[0];
+        if (typeof this.options.element === 'string') {
+            this.wrapper = Helpers.getNodes(this.options.el)[0];
+        } else if (typeof this.options.element === 'object' && this.options.element.nodeName) {
+            this.wrapper = this.options.element;
+        } else {
+            throw new Error('Please provide a css selector or a dom node object for the "element" option');
+        }
 
         if (this.wrapper) {
             // Check for accordion components
@@ -41,10 +47,12 @@ export default class {
             window.onload = () => {
                 this.recalculateHeights();
                 // Check hash URL and open relevant items accordingly
-                if (this.options.handleHashUrl) {
+                if (this.options.hashUrl) {
                     this.loadFromUrlHash();
                 }
             };
+        } else {
+            throw new Error('Wrapper Element could not be found');
         }
     }
 
@@ -54,7 +62,7 @@ export default class {
      */
     setOptions(options) {
         let defaults = {
-            wrapperClass: 'js-concertina',
+            el: '.c-concertina',
             transitionClass: 'c-concertina--has-transition',
             panelClass: 'c-concertina__panel',
             activePanelClass: 'c-concertina__panel--is-active',
@@ -62,7 +70,7 @@ export default class {
             titleClass: 'c-concertina__title',
             contentClass: 'c-concertina__content',
             contentCanvasClass: 'c-concertina__content-canvas',
-            handleHashUrl: true,
+            hashUrl: true,
             scrollToPanelOnClick: 'mobile',
             transition: true,
             closeOthers: false
@@ -246,7 +254,7 @@ export default class {
         Helpers.setAttr(panel.data.header, 'aria-expanded', false);
 
         // Remove Url hash
-        if (this.options.handleHashUrl) {
+        if (this.options.hashUrl) {
             UrlHandler.removeUrlHash();
         }
 
@@ -268,7 +276,7 @@ export default class {
         Helpers.setAttr(panel.data.header, 'aria-expanded', true);
 
         // Update the url hash to current panel Id
-        if (this.options.handleHashUrl) {
+        if (this.options.hashUrl) {
             UrlHandler.updateUrlHash(panel.data.header);
         }
 

@@ -4,8 +4,8 @@ export default {
      * @param {string} selector - A given selector
      * @return {Array} - An array of DOM nodes
      */
-    getNodes(selector) {
-        return [].slice.call(document.querySelectorAll(selector));
+    getNodes(selector, parent = document) {
+        return [].slice.call(parent.querySelectorAll(selector));
     },
 
     /**

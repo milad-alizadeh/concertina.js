@@ -29,11 +29,6 @@ export default class {
             // Set Event Listeners
             this.setListeners();
 
-            // Check hash URL and open relevant items accordingly
-            if (this.options.handleHashUrl) {
-                this.loadFromUrlHash();
-            }
-
             // Set accesibility attributes
             this.setAccesibility();
 
@@ -45,6 +40,10 @@ export default class {
 
             window.onload = () => {
                 this.recalculateHeights();
+                // Check hash URL and open relevant items accordingly
+                if (this.options.handleHashUrl) {
+                    this.loadFromUrlHash();
+                }
             };
         }
     }
@@ -357,12 +356,17 @@ export default class {
         }
     }
 
+    /**
+     * Get the panel states
+     * @return {array}
+     */
     getPanelsState() {
         let states = [];
 
         this.panels.forEach((panel) => {
             states.push({
                 el: panel,
+                height: panel.data.height,
                 isOpen: panel.data.isOpen
             });
         });

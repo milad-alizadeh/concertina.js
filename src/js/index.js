@@ -30,7 +30,7 @@ export default class {
             this.setListeners();
 
             // Check hash URL and open relevant items accordingly
-            if (this.options.handleUrlHash) {
+            if (this.options.handleHashUrl) {
                 this.loadFromUrlHash();
             }
 
@@ -63,10 +63,10 @@ export default class {
             titleClass: 'c-concertina__title',
             contentClass: 'c-concertina__content',
             contentCanvasClass: 'c-concertina__content-canvas',
-            handleHashUrl: false,
+            handleHashUrl: true,
             scrollToPanelOnClick: 'mobile',
             transition: true,
-            closeOthers: true
+            closeOthers: false
         };
 
         this.options = {
@@ -198,7 +198,8 @@ export default class {
                 height: Helpers.getHeight(contentCanvas),
                 contentCanvas,
                 content,
-                header
+                header,
+                isOpen: false
             });
         });
     }
@@ -246,7 +247,7 @@ export default class {
         Helpers.setAttr(panel.data.header, 'aria-expanded', false);
 
         // Remove Url hash
-        if (this.options.handleUrlHash) {
+        if (this.options.handleHashUrl) {
             UrlHandler.removeUrlHash();
         }
 
@@ -268,7 +269,7 @@ export default class {
         Helpers.setAttr(panel.data.header, 'aria-expanded', true);
 
         // Update the url hash to current panel Id
-        if (this.options.handleUrlHash) {
+        if (this.options.handleHashUrl) {
             UrlHandler.updateUrlHash(panel.data.header);
         }
 
@@ -330,5 +331,42 @@ export default class {
         this.panels.forEach((panel) => {
             this.closePanel(panel);
         });
+    }
+
+    /**
+     * Open a specific panel based on its index
+     * @param  {int} panelIndex
+     */
+    open(panelIndex) {
+        if (this.panels[panelIndex]) {
+            this.openPanel(this.panels[panelIndex]);
+        } else {
+            throw new Error(`Panel with index "${panelIndex}" does not exist`);
+        }
+    }
+
+    /**
+     * Close a specific panel based on its index
+     * @param  {int} panelIndex
+     */
+    close(panelIndex) {
+        if (this.panels[panelIndex]) {
+            this.closePanel(this.panels[panelIndex]);
+        } else {
+            throw new Error(`Panel with index "${panelIndex}" does not exist`);
+        }
+    }
+
+    getPanelsState() {
+        let states = [];
+
+        this.panels.forEach((panel) => {
+            states.push({
+                el: panel,
+                isOpen: panel.data.isOpen
+            });
+        });
+
+        return states;
     }
 }

@@ -72,7 +72,6 @@ import Concertina from 'concertina.js';
 new Concertina({
     element: '.c-concertina'
 });
-
 ```
 
 By default this code will grab the first element matching css selector.

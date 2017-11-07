@@ -1,5 +1,5 @@
 /**
- * Consertina.js
+ * Concertina.js
  * An accessible, lightweight and modern javascript accordion with no dependencies and a useful api.
  */
 
@@ -10,12 +10,12 @@ import '../scss/concertina.scss';
 import Helpers from './helpers';
 import UrlHandler from './url-handler';
 
-export default class {
+class Concertina {
     constructor(options) {
         this.setOptions(options);
 
         if (typeof this.options.element === 'string') {
-            this.wrapper = Helpers.getNodes(this.options.el)[0];
+            this.wrapper = Helpers.getNodes(this.options.element)[0];
         } else if (typeof this.options.element === 'object' && this.options.element.nodeName) {
             this.wrapper = this.options.element;
         } else {
@@ -382,3 +382,7 @@ export default class {
         return states;
     }
 }
+
+window.Concertina = Concertina;
+
+export default Concertina;

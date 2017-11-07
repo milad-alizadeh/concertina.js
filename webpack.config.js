@@ -16,10 +16,7 @@ module.exports = {
     },
     entry: './src/js/index.js',
     // Don't include them into library build
-    externals: [
-        'jump.js',
-        'lodash.debounce'
-    ],
+    externals: [],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'concertina.min.js',

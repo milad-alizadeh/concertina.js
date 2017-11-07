@@ -1,6 +1,6 @@
 /**
  * Consertina.js
- *
+ * An accessible, lightweight and modern javascript accordion with no dependencies and a useful api.
  */
 
 // Styles
@@ -27,7 +27,7 @@ export default class {
             this.setElement('panels', `.${this.options.panelClass}`);
             this.setElement('content', `.${this.options.contentClass}`);
             this.setElement('headers', `.${this.options.headerClass}`);
-            this.setElement('content-canvas', `.${this.options.contentCanvasClass}`);
+            this.setElement('content-inner', `.${this.options.contentInnerClass}`);
 
             // Claculate initial heights and paddings
             this.calculateStyles();
@@ -62,14 +62,13 @@ export default class {
      */
     setOptions(options) {
         let defaults = {
-            el: '.c-concertina',
+            element: '.c-concertina',
             transitionClass: 'c-concertina--has-transition',
             panelClass: 'c-concertina__panel',
             activePanelClass: 'c-concertina__panel--is-active',
             headerClass: 'c-concertina__header',
-            titleClass: 'c-concertina__title',
             contentClass: 'c-concertina__content',
-            contentCanvasClass: 'c-concertina__content-canvas',
+            contentInnerClass: 'c-concertina__content-inner',
             hashUrl: true,
             scrollToPanelOnClick: 'mobile',
             transition: true,
@@ -197,7 +196,7 @@ export default class {
     calculateStyles() {
         this.panels.forEach((panel) => {
             let content = panel.querySelector('.' + this.options.contentClass);
-            let contentCanvas = panel.querySelector('.' + this.options.contentCanvasClass);
+            let contentCanvas = panel.querySelector('.' + this.options.contentInnerClass);
             let header = panel.querySelector('.' + this.options.headerClass);
 
             // We need to get height and padding of the element and save it on panel node
@@ -331,6 +330,7 @@ export default class {
             this.openPanel(panel);
         });
     }
+
     /**
      * Open All panels
      */

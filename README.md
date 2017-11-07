@@ -1,6 +1,6 @@
 # Concertina.js
 
-An accessible, lightweight and modern javascript accordion with no dependencies and a useful api.
+An accessible, lightweight and modern javascript accordion with no dependencies and extensive api.
 
 ## How to install
 

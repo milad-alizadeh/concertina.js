@@ -1,7 +1,7 @@
 {
   "name": "concertina.js",
   "author": "Milad Alizadeh",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An accessible, lightweight and modern javascript accordion with no dependencies and extensive api.",
   "main": "dist/concertina.min.js",
   "dependencies": {},

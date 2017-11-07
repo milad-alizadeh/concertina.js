@@ -106,8 +106,7 @@ class Concertina {
      */
     getTransitionDuration() {
         let transitionDuration = Helpers.getStyle(this.content[0], 'transition-duration');
-
-        if (transitionDuration === '0s' && !this.options.transition) {
+        if (transitionDuration === '0s' && this.options.transition) {
             throw new Error(`You should set transition-duration on the '.${this.options.contentClass}' element in your css file or disable transition by setting "transition" option to false in the constructor`);
         } else {
             return transitionDuration.replace('s', '') * 1000;

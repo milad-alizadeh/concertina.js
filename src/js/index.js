@@ -72,7 +72,7 @@ class Concertina {
             hashUrl: true,
             scrollToPanelOnClick: 'mobile',
             transition: true,
-            closeOthers: false
+            closeOthers: true
         };
 
         this.options = {

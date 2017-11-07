@@ -57,11 +57,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Mastodonic/collapsible.js.git"
+    "url": "https://github.com/milad-alizadeh/concertina.js"
   },
   "bugs": {
-    "url": "https://github.com/Mastodonic/collapsible.js.git/vue-bootstrap-datetimepicker/issues"
+    "url": "https://github.com/milad-alizadeh/concertina.js/issues"
   },
-  "homepage": "https://github.com/Mastodonic/collapsible.js.git/vue-bootstrap-datetimepicker",
+  "homepage": "https://github.com/milad-alizadeh/concertina.js",
   "license": "MIT"
 }

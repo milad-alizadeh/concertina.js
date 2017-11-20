@@ -1,7 +1,7 @@
 {
   "name": "concertina.js",
   "author": "Milad Alizadeh",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "An accessible, lightweight and modern javascript accordion with no dependencies and extensive api.",
   "main": "dist/concertina.min.js",
   "dependencies": {},
@@ -55,7 +55,18 @@
     "build": "node ./node_modules/webpack/bin/webpack.js --hide-modules -p --progress",
     "production": "npm run test && npm run build"
   },
-  "keywords": ["accordion", "vanilla accordion", "accessible", "no dependencies", "foldable", "component", "ui", "collapse", "concertina", "collapsable"],
+  "keywords": [
+    "accordion",
+    "vanilla accordion",
+    "accessible",
+    "no dependencies",
+    "foldable",
+    "component",
+    "ui",
+    "collapse",
+    "concertina",
+    "collapsable"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/milad-alizadeh/concertina.js"

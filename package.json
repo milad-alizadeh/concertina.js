@@ -55,6 +55,7 @@
     "build": "node ./node_modules/webpack/bin/webpack.js --hide-modules -p --progress",
     "production": "npm run test && npm run build"
   },
+  "keywords": ["accordion", "vanilla accordion", "accessible", "no dependencies", "foldable", "component", "ui", "collapse", "concertina", "collapsable"],
   "repository": {
     "type": "git",
     "url": "https://github.com/milad-alizadeh/concertina.js"

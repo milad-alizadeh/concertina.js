@@ -315,9 +315,11 @@ class Concertina {
             let elemRect = this.activePanel.getBoundingClientRect();
             let offset = elemRect.top - bodyRect.top;
 
-            setTimeout(() => {
-                window.scrollTo(0, offset);
-            }, this.transitionTime + 5);
+            if (this.options.closeOthers) {
+                setTimeout(() => {
+                    window.scrollTo(0, offset);
+                }, this.transitionTime + 5);
+            }
         }
     }
 

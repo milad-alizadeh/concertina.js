@@ -27,7 +27,7 @@
     "extract-text-webpack-plugin": "2.1.2",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.1",
-    "node-sass": "^4.6.0",
+    "node-sass": "^7.0.0",
     "postcss-encode-background-svgs": "^0.0.4",
     "postcss-loader": "^2.0.8",
     "sass-loader": "^6.0.6",
